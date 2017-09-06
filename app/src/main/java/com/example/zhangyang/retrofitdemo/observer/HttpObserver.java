@@ -20,8 +20,8 @@ import io.reactivex.disposables.Disposable;
 public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
     private QaTextProgressDialog progressDialog;
 
-    public HttpObserver(Context context) {
-        showProgressDialog(context);
+    public HttpObserver(Context context,boolean isShow) {
+        showProgressDialog(context,isShow);
     }
 
     @Override
@@ -58,7 +58,10 @@ public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
 
 
     protected abstract void onSuccess(T data);
-    private void showProgressDialog(Context context) {
+    private void showProgressDialog(Context context,boolean isShow) {
+
+        if (!isShow)
+            return;
 
         if (progressDialog == null) {
 
