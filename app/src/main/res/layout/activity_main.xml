@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.zhangyang.retrofitdemo.activity.MainActivity">
+
+    <Button
+        android:id="@+id/getBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="get请求"
+        android:layout_marginRight="8dp" />
+    <Button
+        android:id="@+id/postBt"
+        android:layout_width="wrap_content"
+        android:text="POST请求"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/getBt" />
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/getBt" />
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/postBt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="146dp" />
+
+</RelativeLayout>
