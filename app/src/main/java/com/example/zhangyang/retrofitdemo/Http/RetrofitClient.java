@@ -34,7 +34,7 @@ public class RetrofitClient {
 
     private static OkHttpClient getOkHttpClient() {
 
-//        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getContext()), "OkHttpCache");
+        File httpCacheDirectory = new File(FileUtils.getCacheDir(MyApplication.getContext()), "OkHttpCache");
 
         //定制OkHttp
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder();
@@ -57,8 +57,8 @@ public class RetrofitClient {
                 }).setLevel(HttpLoggingInterceptor.Level.BASIC))
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .writeTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS);
-//                .cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
+                .readTimeout(5, TimeUnit.SECONDS)
+                .cache(new Cache(httpCacheDirectory, 10 * 1024 * 1024));
 
 
         return httpClientBuilder.build();

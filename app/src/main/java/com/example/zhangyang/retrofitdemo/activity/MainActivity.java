@@ -11,9 +11,11 @@ import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.Http.HttpManager;
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
 import com.example.zhangyang.retrofitdemo.Http.RxSchedulers;
+import com.example.zhangyang.retrofitdemo.api.HomeApi;
 import com.example.zhangyang.retrofitdemo.api.HttpRequest;
 import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.bean.Home;
+import com.example.zhangyang.retrofitdemo.dialog.QaTextProgressDialog;
 import com.example.zhangyang.retrofitdemo.observer.HttpObserver;
 
 import java.util.List;
@@ -40,10 +42,10 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 HttpManager.getInstance()
-                        .createService(HttpRequest.class)
+                        .createService(HomeApi.class)
                         .getAndroidData(1)
                         .compose(RxSchedulers.<HttpResponse<List<Home>>>compose())
-                        .subscribe(new HttpObserver<List<Home>>() {
+                        .subscribe(new HttpObserver<List<Home>>(MainActivity.this) {
                             @Override
                             protected void onFailed(Throwable throwable) {
 
