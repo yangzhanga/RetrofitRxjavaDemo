@@ -1,7 +1,5 @@
 package com.example.zhangyang.retrofitdemo.activity;
 
-import android.os.Process;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +7,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.Http.HttpManager;
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
 import com.example.zhangyang.retrofitdemo.Http.RxSchedulers;
@@ -22,7 +21,7 @@ import java.util.List;
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private Button getBt,postBt;
     private TextView tv;
     private ImageView img;
