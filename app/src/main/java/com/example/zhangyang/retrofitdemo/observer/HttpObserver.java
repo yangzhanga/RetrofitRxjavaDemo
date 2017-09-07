@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
-import com.example.zhangyang.retrofitdemo.MyApplication;
 import com.example.zhangyang.retrofitdemo.dialog.QaTextProgressDialog;
 
 
@@ -19,14 +18,14 @@ import io.reactivex.disposables.Disposable;
 
 public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
     private QaTextProgressDialog progressDialog;
-
+    private Disposable  mDisposable;
     public HttpObserver(Context context,boolean isShow) {
         showProgressDialog(context,isShow);
     }
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
-
+        mDisposable=  d;
     }
 
     @Override
@@ -77,5 +76,12 @@ public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
 
         if (progressDialog != null && progressDialog.isShowing())
             progressDialog.dismiss();
+    }
+
+
+    public void unSubscribe(){
+        if (mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
     }
 }

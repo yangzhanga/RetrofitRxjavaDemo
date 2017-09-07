@@ -12,24 +12,20 @@
         android:text="get请求"
         android:layout_marginRight="8dp" />
     <Button
-        android:id="@+id/postBt"
+        android:id="@+id/interruptBt"
         android:layout_width="wrap_content"
-        android:text="POST请求"
+        android:text="中断请求"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/getBt" />
 
-    <TextView
-        android:id="@+id/tv"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycleview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/getBt" />
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_below="@+id/postBt"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="146dp" />
+        android:layout_below="@+id/getBt">
+
+    </android.support.v7.widget.RecyclerView>
+
 
 </RelativeLayout>

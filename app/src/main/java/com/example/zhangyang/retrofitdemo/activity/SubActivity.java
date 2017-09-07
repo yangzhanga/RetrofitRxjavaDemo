@@ -20,14 +20,7 @@ public class SubActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.e("SubActivity","onCreate");
         setContentView(R.layout.activity_main);
-        TextView tv= (TextView) findViewById(R.id.tv);
-        tv.setText("SubActivity");
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
     }
 
     @Override
