@@ -31,12 +31,12 @@ public abstract class HttpObserver<T> implements Observer<HttpResponse<T>> {
     @Override
     public void onNext(@NonNull HttpResponse<T> httpResponse) {
 
-        if (!httpResponse.error){
+        if (!httpResponse.isError()){
             Log.e("success","success");
 
             onSuccess(httpResponse.results);
         }else {
-            onFailed(new Throwable("error="+httpResponse.error));
+            onFailed(new Throwable("error="+httpResponse.isError()));
         }
 
     }
