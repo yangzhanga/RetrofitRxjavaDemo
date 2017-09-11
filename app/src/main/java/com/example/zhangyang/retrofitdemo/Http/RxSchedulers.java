@@ -41,7 +41,6 @@ public class RxSchedulers {
                         .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
                             public void accept(Disposable disposable) throws Exception {
-                                Log.e("THREAD",""+ Thread.currentThread().getName());
                                 if (!NetUtils.isNetworkAvailable(MyApplication.getContext())) {
                                     Toast.makeText(MyApplication.getContext(), "网络连接错误", Toast.LENGTH_SHORT).show();
                                 }

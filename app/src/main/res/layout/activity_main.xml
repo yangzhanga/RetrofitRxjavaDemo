@@ -18,6 +18,19 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/getBt" />
+    <Button
+        android:id="@+id/addBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/interruptBt"
+        android:text="添加item"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="可长按item删除"
+      android:layout_alignBaseline="@+id/addBt"
+      android:layout_alignBottom="@+id/addBt"
+      android:layout_toEndOf="@+id/addBt" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"

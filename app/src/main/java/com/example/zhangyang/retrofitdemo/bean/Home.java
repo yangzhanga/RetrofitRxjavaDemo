@@ -98,4 +98,8 @@ public class Home {
         public void setImages(List<String> images) {
             this.images = images;
         }
+
+    public Home(String desc) {
+        this.desc = desc;
+    }
 }
