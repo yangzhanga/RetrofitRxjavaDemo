@@ -1,5 +1,6 @@
 package com.example.zhangyang.retrofitdemo.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -30,7 +31,7 @@ public class MainActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private MyRecycleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Home> list;
+    private List<Home> list_data;
 
     HttpObserver<List<Home>> observer;
 
@@ -45,7 +46,7 @@ public class MainActivity extends BaseActivity {
         addBt = (Button) findViewById(R.id.addBt);
         recyclerView = (RecyclerView) findViewById(R.id.recycleview);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mAdapter = new MyRecycleAdapter(MainActivity.this, list);
+        mAdapter = new MyRecycleAdapter(MainActivity.this, list_data);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
@@ -56,7 +57,10 @@ public class MainActivity extends BaseActivity {
         mAdapter.setRecyclerViewItemClickListener(new MyRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "点击" + position, Toast.LENGTH_SHORT).show();
+
+                Intent intent=new Intent(MainActivity.this,SubActivity.class);
+                intent.putExtra("url",list_data.get(position).getUrl());
+                startActivity(intent);
             }
 
             @Override
@@ -102,7 +106,7 @@ public class MainActivity extends BaseActivity {
         Observable<HttpResponse<List<Home>>> observable = HttpManager.getInstance()
                 .createService(HomeApi.class)
                 .getAndroidData(1);
-        observer = new HttpObserver<List<Home>>(MainActivity.this, false) {
+        observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
             @Override
             protected void onFailed(Throwable throwable) {
 
@@ -111,6 +115,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onSuccess(List<Home> list) {
                 Log.e("list", list.size() + "");
+                list_data=list;
                 mAdapter.updateData(list);
             }
 
