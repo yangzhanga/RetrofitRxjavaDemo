@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity {
     HttpObserver<List<Home>> observer;
     private ImageView toTop;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,13 +71,9 @@ public class MainActivity extends BaseActivity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        page = 1;
-                        getData(page);
-                    }
-                },2000);
+
+                page = 1;
+                getData(page);
             }
         });
 
