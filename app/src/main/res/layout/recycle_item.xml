@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:padding="10dp"
+    >
 
-
+<ImageView
+    android:id="@+id/img"
+    android:layout_width="100dp"
+    android:layout_height="100dp"
+    android:layout_centerVertical="true"
+    android:background="@mipmap/ic_launcher"/>
     <TextView
         android:id="@+id/titleTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="asdsd" />
-</LinearLayout>
+        android:textStyle="bold"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/img"
+        android:text="啊实打实大声道撒大所多所是倒萨大撒旦撒旦撒旦撒撒大大阿萨德说的安顿"
+        android:layout_alignTop="@+id/img"
+        />
+
+    <TextView
+        android:id="@+id/nameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abc"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/titleTv"
+        android:layout_toRightOf="@+id/timeTv"
+        android:layout_alignParentBottom="true"
+         ></TextView>
+    <TextView
+        android:id="@+id/timeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="abc"
+        android:layout_below="@+id/titleTv"
+        android:layout_marginRight="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="20dp"
+        android:layout_toEndOf="@+id/img"></TextView>
+</RelativeLayout>

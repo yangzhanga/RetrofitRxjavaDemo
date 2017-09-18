@@ -99,7 +99,10 @@ public class Home {
             this.images = images;
         }
 
-    public Home(String desc) {
+    public Home(String desc, String publishedAt, String who, List<String> images) {
         this.desc = desc;
+        this.publishedAt = publishedAt;
+        this.who = who;
+        this.images = images;
     }
 }

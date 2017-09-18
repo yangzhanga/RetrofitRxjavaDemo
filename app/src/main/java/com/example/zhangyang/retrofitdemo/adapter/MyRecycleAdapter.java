@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.bean.Home;
 
@@ -27,11 +29,25 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
         this.list = list;
     }
 
+    public List<Home> getList() {
+        return list;
+    }
+
+    public void setList(List<Home> list) {
+        this.list = list;
+    }
+
     public void updateData(List<Home> list) {
         this.list = list;
         notifyDataSetChanged();
     }
-
+    public void addData(List<Home> newList) {
+        if(list == null) {
+            list = new ArrayList<>();
+        }
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
     /**
      * 添加新的Item
      */
@@ -73,6 +89,18 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         ((MyViewHoder)holder).titleTv.setText(list.get(position).getDesc());
+        ((MyViewHoder)holder).nameTv.setText(list.get(position).getWho());
+        ((MyViewHoder)holder).timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
+        if (list.get(position).getImages()!=null&&list.get(position).getImages().get(0)!=null){
+            ((MyViewHoder)holder).img.setVisibility(View.VISIBLE);
+            Glide.with(context)
+                    .load(list.get(position).getImages().get(0))
+                    .centerCrop()
+                    .crossFade()
+                    .into(((MyViewHoder)holder).img);
+        }else {
+            ((MyViewHoder)holder).img.setVisibility(View.GONE);
+        }
         ((MyViewHoder)holder).itemView.setTag(position);
     }
 
@@ -98,11 +126,15 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
 
 
     static class MyViewHoder  extends RecyclerView.ViewHolder{
-    private TextView titleTv;
+    private TextView titleTv,nameTv,timeTv;
+        private ImageView img;
         public MyViewHoder(View itemView) {
             super(itemView);
 
             titleTv= (TextView) itemView.findViewById(R.id.titleTv);
+            nameTv= (TextView) itemView.findViewById(R.id.nameTv);
+            timeTv=(TextView) itemView.findViewById(R.id.timeTv);
+            img= (ImageView) itemView.findViewById(R.id.img);
         }
     }
 

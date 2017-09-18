@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.zhangyang.retrofitdemo.BaseActivity;
@@ -32,9 +33,9 @@ public class MainActivity extends BaseActivity {
     private MyRecycleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Home> list_data;
-
+    private int page=1;
     HttpObserver<List<Home>> observer;
-
+    private ImageView toTop;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +45,7 @@ public class MainActivity extends BaseActivity {
         getBt = (Button) findViewById(R.id.getBt);
         interruptBt = (Button) findViewById(R.id.interruptBt);
         addBt = (Button) findViewById(R.id.addBt);
+        toTop= (ImageView) findViewById(R.id.toTop);
         recyclerView = (RecyclerView) findViewById(R.id.recycleview);
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAdapter = new MyRecycleAdapter(MainActivity.this, list_data);
@@ -57,10 +59,11 @@ public class MainActivity extends BaseActivity {
         mAdapter.setRecyclerViewItemClickListener(new MyRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-                Intent intent=new Intent(MainActivity.this,SubActivity.class);
-                intent.putExtra("url",list_data.get(position).getUrl());
-                startActivity(intent);
+                if (mAdapter.getList().get(position).getUrl() != null&&!mAdapter.getList().get(position).getUrl().equals("")) {
+                    Intent intent = new Intent(MainActivity.this, SubActivity.class);
+                    intent.putExtra("url", mAdapter.getList().get(position).getUrl());
+                    startActivity(intent);
+                }
             }
 
             @Override
@@ -71,11 +74,49 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            //用来标记是否正在向最后一个滑动
+            boolean isSlidingToLast = false;
+            LinearLayoutManager manager =(LinearLayoutManager) recyclerView.getLayoutManager();
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                //不滚动时
+                if(newState==RecyclerView.SCROLL_STATE_IDLE){
+                    //获取最后一个完全显示的ItemPosition
+                    int lastPos = manager.findLastCompletelyVisibleItemPosition();
+                    int itemCount=manager.getItemCount();
+                    // 判断是否滚动到底部，
+                    if ((lastPos == itemCount - 1) && isSlidingToLast) {
+                        page++;
+                        getData(page);
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy>0){//向下滑动
+                    isSlidingToLast=true;
+                }else {
+                    isSlidingToLast=false;
+                }
+                int lastPos = manager.findLastCompletelyVisibleItemPosition();
+                if (lastPos>40){
+                    toTop.setVisibility(View.VISIBLE);
+                }else {
+                    toTop.setVisibility(View.GONE);
+                }
+            }
+        });
         getBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                getData();
+                page = 1;
+                getData(page);
 
             }
         });
@@ -92,31 +133,39 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 int pos = 0;
-                mAdapter.addNewItem(pos, new Home("新添加的"));
+                mAdapter.addNewItem(pos, new Home("新添加的","","",null));
                 recyclerView.smoothScrollToPosition(pos);
 
             }
         });
 
-
+        toTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+            }
+        });
     }
 
-    private void getData() {
+    private void getData(int pagee) {
 
         Observable<HttpResponse<List<Home>>> observable = HttpManager.getInstance()
                 .createService(HomeApi.class)
-                .getAndroidData(1);
+                .getAndroidData(pagee);
         observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
             @Override
             protected void onFailed(Throwable throwable) {
-
+                page--;
             }
 
             @Override
             public void onSuccess(List<Home> list) {
                 Log.e("list", list.size() + "");
-                list_data=list;
-                mAdapter.updateData(list);
+                if (page==1){
+                    mAdapter.updateData(list);
+                }else {
+                    mAdapter.addData(list);
+                }
             }
 
         };
