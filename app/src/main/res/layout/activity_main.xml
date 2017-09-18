@@ -35,14 +35,19 @@
         android:layout_toEndOf="@+id/addBt"
         android:text="可长按item删除" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleview"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/getBt">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+        </android.support.v7.widget.RecyclerView>
+    </android.support.v4.widget.SwipeRefreshLayout>
     <ImageView
         android:id="@+id/toTop"
         android:layout_width="40dp"

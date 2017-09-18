@@ -2,6 +2,8 @@ package com.example.zhangyang.retrofitdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,7 +30,7 @@ import io.reactivex.Observable;
 
 
 public class MainActivity extends BaseActivity {
-    private Button getBt, interruptBt, addBt, deleteBt;
+    private Button getBt, interruptBt, addBt;
     private RecyclerView recyclerView;
     private MyRecycleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -36,25 +38,49 @@ public class MainActivity extends BaseActivity {
     private int page=1;
     HttpObserver<List<Home>> observer;
     private ImageView toTop;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.e("MainActivity", "onCreate");
 
+        initView();
+        initData();
+
+    }
+
+
+    private void initView() {
         getBt = (Button) findViewById(R.id.getBt);
         interruptBt = (Button) findViewById(R.id.interruptBt);
         addBt = (Button) findViewById(R.id.addBt);
         toTop= (ImageView) findViewById(R.id.toTop);
         recyclerView = (RecyclerView) findViewById(R.id.recycleview);
+        swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAdapter = new MyRecycleAdapter(MainActivity.this, list_data);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
-
-
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        page = 1;
+                        getData(page);
+                    }
+                },2000);
+            }
+        });
 
         mAdapter.setRecyclerViewItemClickListener(new MyRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -87,6 +113,7 @@ public class MainActivity extends BaseActivity {
                     //获取最后一个完全显示的ItemPosition
                     int lastPos = manager.findLastCompletelyVisibleItemPosition();
                     int itemCount=manager.getItemCount();
+
                     // 判断是否滚动到底部，
                     if ((lastPos == itemCount - 1) && isSlidingToLast) {
                         page++;
@@ -105,6 +132,14 @@ public class MainActivity extends BaseActivity {
                     isSlidingToLast=false;
                 }
                 int lastPos = manager.findLastCompletelyVisibleItemPosition();
+
+                if (lastPos == mAdapter.getItemCount() - 1) {
+                    boolean isRefreshing = swipeRefreshLayout.isRefreshing();
+                    if (isRefreshing) {
+                        mAdapter.notifyItemRemoved(mAdapter.getItemCount());
+                        return;
+                    }
+                }
                 if (lastPos>40){
                     toTop.setVisibility(View.VISIBLE);
                 }else {
@@ -146,12 +181,15 @@ public class MainActivity extends BaseActivity {
             }
         });
     }
+    private void initData() {
+        getData(1);
+    }
 
-    private void getData(int pagee) {
+    private void getData(int p) {
 
         Observable<HttpResponse<List<Home>>> observable = HttpManager.getInstance()
                 .createService(HomeApi.class)
-                .getAndroidData(pagee);
+                .getAndroidData(p);
         observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
             @Override
             protected void onFailed(Throwable throwable) {
@@ -160,7 +198,8 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onSuccess(List<Home> list) {
-                Log.e("list", list.size() + "");
+                swipeRefreshLayout.setRefreshing(false);
+                Log.e("page",page+"");
                 if (page==1){
                     mAdapter.updateData(list);
                 }else {
