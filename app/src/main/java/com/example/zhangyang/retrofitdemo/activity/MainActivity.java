@@ -188,6 +188,7 @@ public class MainActivity extends BaseActivity {
         observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
             @Override
             protected void onFailed(Throwable throwable) {
+                swipeRefreshLayout.setRefreshing(false);
                 page--;
             }
 
