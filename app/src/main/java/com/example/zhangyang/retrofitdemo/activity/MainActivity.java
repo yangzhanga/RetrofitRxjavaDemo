@@ -181,31 +181,56 @@ public class MainActivity extends BaseActivity {
     }
 
     private void getData(int p) {
+//这种格式是为了 可以终止网络请求
+//        Observable<HttpResponse<List<Home>>> observable = HttpManager.getInstance()
+//                .createService(HomeApi.class)
+//                .getAndroidData(p);
+//        observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
+//            @Override
+//            protected void onFailed(Throwable throwable) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                page--;
+//            }
+//
+//            @Override
+//            public void onSuccess(List<Home> list) {
+//                swipeRefreshLayout.setRefreshing(false);
+//                Log.e("page",page+"");
+//                if (page==1){
+//                    mAdapter.updateData(list);
+//                }else {
+//                    mAdapter.addData(list);
+//                }
+//            }
+//
+//        };
+//        observable.compose(RxSchedulers.<HttpResponse<List<Home>>>compose())
+//                .subscribe(observer);
 
-        Observable<HttpResponse<List<Home>>> observable = HttpManager.getInstance()
+
+        HttpManager.getInstance()
                 .createService(HomeApi.class)
-                .getAndroidData(p);
-        observer = new HttpObserver<List<Home>>(MainActivity.this, true) {
-            @Override
-            protected void onFailed(Throwable throwable) {
-                swipeRefreshLayout.setRefreshing(false);
-                page--;
-            }
+                .getAndroidData(p)
+                .compose(RxSchedulers.<HttpResponse<List<Home>>>compose())
+                .subscribe(new HttpObserver<List<Home>>(MainActivity.this, true) {
+                    @Override
+                    protected void onFailed(Throwable throwable) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        page--;
+                    }
 
-            @Override
-            public void onSuccess(List<Home> list) {
-                swipeRefreshLayout.setRefreshing(false);
-                Log.e("page",page+"");
-                if (page==1){
-                    mAdapter.updateData(list);
-                }else {
-                    mAdapter.addData(list);
-                }
-            }
+                    @Override
+                    public void onSuccess(List<Home> list) {
+                        swipeRefreshLayout.setRefreshing(false);
+                        Log.e("page", page + "");
+                        if (page == 1) {
+                            mAdapter.updateData(list);
+                        } else {
+                            mAdapter.addData(list);
+                        }
+                    }
 
-        };
-        observable.compose(RxSchedulers.<HttpResponse<List<Home>>>compose())
-                .subscribe(observer);
+                });
     }
 
     @Override
