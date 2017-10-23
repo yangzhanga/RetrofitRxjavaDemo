@@ -87,21 +87,21 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
-        ((MyViewHoder)holder).titleTv.setText(list.get(position).getDesc());
-        ((MyViewHoder)holder).nameTv.setText(list.get(position).getWho());
-        ((MyViewHoder)holder).timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
+        MyViewHoder viewHoder=(MyViewHoder)holder;
+        viewHoder.titleTv.setText(list.get(position).getDesc());
+        viewHoder.nameTv.setText(list.get(position).getWho());
+        viewHoder.timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
         if (list.get(position).getImages()!=null&&list.get(position).getImages().get(0)!=null){
-            ((MyViewHoder)holder).img.setVisibility(View.VISIBLE);
+            viewHoder.img.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(list.get(position).getImages().get(0))
                     .centerCrop()
                     .crossFade()
-                    .into(((MyViewHoder)holder).img);
+                    .into(viewHoder.img);
         }else {
-            ((MyViewHoder)holder).img.setVisibility(View.GONE);
+            viewHoder.img.setVisibility(View.GONE);
         }
-        ((MyViewHoder)holder).itemView.setTag(position);
+        viewHoder.itemView.setTag(position);
     }
 
     @Override

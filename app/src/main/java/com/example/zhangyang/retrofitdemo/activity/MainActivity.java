@@ -29,12 +29,16 @@ import java.util.List;
 import io.reactivex.Observable;
 
 
+/**
+ * @author zhangyang
+ */
 public class MainActivity extends BaseActivity {
+    private static final int COUNT_NUM = 40;
     private Button getBt, interruptBt, addBt;
     private RecyclerView recyclerView;
     private MyRecycleAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<Home> list_data;
+    private List<Home> listData;
     private int page=1;
     HttpObserver<List<Home>> observer;
     private ImageView toTop;
@@ -61,7 +65,7 @@ public class MainActivity extends BaseActivity {
         swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        mAdapter = new MyRecycleAdapter(MainActivity.this, list_data);
+        mAdapter = new MyRecycleAdapter(MainActivity.this, listData);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -80,7 +84,7 @@ public class MainActivity extends BaseActivity {
         mAdapter.setRecyclerViewItemClickListener(new MyRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (mAdapter.getList().get(position).getUrl() != null&&!mAdapter.getList().get(position).getUrl().equals("")) {
+                if (mAdapter.getList().get(position).getUrl() != null&&!"".equals(mAdapter.getList().get(position).getUrl())) {
                     Intent intent = new Intent(MainActivity.this, SubActivity.class);
                     intent.putExtra("url", mAdapter.getList().get(position).getUrl());
                     startActivity(intent);
@@ -120,8 +124,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-
-                if (dy>0){//向下滑动
+                //向下滑动
+                if (dy>0){
                     isSlidingToLast=true;
                 }else {
                     isSlidingToLast=false;
@@ -135,7 +139,7 @@ public class MainActivity extends BaseActivity {
                         return;
                     }
                 }
-                if (lastPos>40){
+                if (lastPos>COUNT_NUM){
                     toTop.setVisibility(View.VISIBLE);
                 }else {
                     toTop.setVisibility(View.GONE);
@@ -154,8 +158,9 @@ public class MainActivity extends BaseActivity {
         interruptBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (observer != null)
+                if (observer != null) {
                     observer.unSubscribe();
+                }
             }
         });
 
