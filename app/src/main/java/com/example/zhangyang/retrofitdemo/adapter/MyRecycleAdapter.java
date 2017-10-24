@@ -56,8 +56,8 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
             list = new ArrayList<>();
         }
         list.add(position, home);
-        notifyItemInserted(position);
-        notifyItemRangeChanged(position,list.size()-position);
+        notifyItemInserted(position);//仅仅是起到界面动画的效果，实际上并没有进行数据与界面的重新绑定 点击对应的position会不对
+        notifyItemRangeChanged(position,list.size()-position);//通知重新绑定某一范围内的的数据与界面
     }
 
     /**
