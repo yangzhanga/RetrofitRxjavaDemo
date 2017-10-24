@@ -66,6 +66,8 @@ public class MainActivity extends BaseActivity {
 
         mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mAdapter = new MyRecycleAdapter(MainActivity.this, listData);
+        mAdapter.openLoadAnimation();//开启加载动画
+        mAdapter.isFirstOnly(false);//是否只显示一次动画
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

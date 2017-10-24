@@ -1,10 +1,17 @@
 package com.example.zhangyang.retrofitdemo.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,14 +26,34 @@ import java.util.List;
  * Created by zhangyang on 2017/9/8.
  */
 
-public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnClickListener,View.OnLongClickListener{
+public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyViewHoder> implements View.OnClickListener,View.OnLongClickListener{
     private Context context;
     private List<Home> list;
     private OnRecyclerViewItemClickListener recyclerViewItemClickListener;
+    private boolean mOpenAnimationEnable = false;
+    private boolean mFirstOnlyEnable = true;
+    private int mDuration = 300;
+    private int mLastPosition = -1;
+    private Interpolator mInterpolator = new LinearInterpolator();
 
     public MyRecycleAdapter(Context context, List<Home> list) {
         this.context = context;
         this.list = list;
+    }
+
+    /**
+     * 开启加载动画
+     */
+    public void openLoadAnimation() {
+        this.mOpenAnimationEnable = true;
+    }
+
+    /**
+     * true  每一个item只显示一遍动画
+     * @param firstOnly
+     */
+    public void isFirstOnly(boolean firstOnly) {
+        this.mFirstOnlyEnable = firstOnly;
     }
 
     public List<Home> getList() {
@@ -46,7 +73,8 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
             list = new ArrayList<>();
         }
         list.addAll(newList);
-        notifyDataSetChanged();
+        //之所以不用notifyDataSetChanged(); 是避免加载更多时  当前屏幕的item重复执行动画
+        notifyItemRangeInserted(list.size()-newList.size(),newList.size());
     }
     /**
      * 添加新的Item
@@ -75,7 +103,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.recycle_item, parent, false);
         MyViewHoder myViewHoder=new MyViewHoder(view);
@@ -86,22 +114,24 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        MyViewHoder viewHoder=(MyViewHoder)holder;
-        viewHoder.titleTv.setText(list.get(position).getDesc());
-        viewHoder.nameTv.setText(list.get(position).getWho());
-        viewHoder.timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
+    public void onBindViewHolder(MyViewHoder holder, int position) {
+        Log.e("bind",position+"");
+        addAnimation(holder);
+
+        holder.titleTv.setText(list.get(position).getDesc());
+        holder.nameTv.setText(list.get(position).getWho());
+        holder.timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
         if (list.get(position).getImages()!=null&&list.get(position).getImages().get(0)!=null){
-            viewHoder.img.setVisibility(View.VISIBLE);
+            holder.img.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(list.get(position).getImages().get(0))
                     .centerCrop()
                     .crossFade()
-                    .into(viewHoder.img);
+                    .into(holder.img);
         }else {
-            viewHoder.img.setVisibility(View.GONE);
+            holder.img.setVisibility(View.GONE);
         }
-        viewHoder.itemView.setTag(position);
+        holder.itemView.setTag(position);
     }
 
     @Override
@@ -116,6 +146,28 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
         }
     }
 
+    /**
+     * 当item进入到屏幕时调用
+     * 和onBindViewHolder大致相同，在onBindViewHolder之后调用
+     * @param holder
+     */
+    @Override
+    public void onViewAttachedToWindow(MyViewHoder holder) {
+        super.onViewAttachedToWindow(holder);
+        Log.e("ViewAttached",holder.getLayoutPosition()+"");
+
+    }
+
+    /**
+     * 显示RecyclerView时调用一次
+     * @param recyclerView
+     */
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+
+    }
+
     @Override
     public boolean onLongClick(View v) {
         if (recyclerViewItemClickListener!=null){
@@ -124,6 +176,46 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
         return false;
     }
 
+    /**
+     * 添加动画
+     * @param holder
+     */
+    private void addAnimation(RecyclerView.ViewHolder holder) {
+        if (mOpenAnimationEnable) {
+            if (!mFirstOnlyEnable || holder.getLayoutPosition() > mLastPosition) {
+                /**
+                 * 可以随意组合
+                 */
+                //从右往左
+//                Animator[] animations =new Animator[]{
+//                        ObjectAnimator.ofFloat(holder.itemView, "translationX", holder.itemView.getRootView().getWidth(), 0)
+//                 };
+                //从左往右
+//                Animator[] animations =new Animator[]{
+//                        ObjectAnimator.ofFloat(holder.itemView, "translationX", -holder.itemView.getRootView().getWidth(), 0)
+//                };
+
+                //缩放
+                ObjectAnimator scaleX = ObjectAnimator.ofFloat(holder.itemView, "scaleX", .5f, 1f);
+                ObjectAnimator scaleY = ObjectAnimator.ofFloat(holder.itemView, "scaleY", .5f, 1f);
+                Animator[] animations =new Animator[]{scaleX,scaleY};
+                //透明到显示
+//                Animator[] animations =new Animator[]{
+//                       ObjectAnimator.ofFloat(holder.itemView, "alpha", 0f, 1f)
+//                };
+//
+                for (Animator anim : animations) {
+                    startAnim(anim, holder.getLayoutPosition());
+                }
+                mLastPosition = holder.getLayoutPosition();
+            }
+        }
+    }
+
+    private void startAnim(Animator anim, int index) {
+        anim.setDuration(mDuration).start();
+        anim.setInterpolator(mInterpolator);
+    }
 
     static class MyViewHoder  extends RecyclerView.ViewHolder{
     private TextView titleTv,nameTv,timeTv;
@@ -137,9 +229,6 @@ public class MyRecycleAdapter extends RecyclerView.Adapter implements View.OnCli
             img= (ImageView) itemView.findViewById(R.id.img);
         }
     }
-
-
-
 
 
     public void setRecyclerViewItemClickListener(OnRecyclerViewItemClickListener recyclerViewItemClickListener) {
