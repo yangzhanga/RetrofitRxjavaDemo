@@ -23,6 +23,7 @@ import com.example.zhangyang.retrofitdemo.api.HomeApi;
 import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.bean.Home;
 import com.example.zhangyang.retrofitdemo.observer.HttpObserver;
+import com.example.zhangyang.retrofitdemo.view.DragImageView;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class MainActivity extends BaseActivity {
     private int page=1;
     HttpObserver<List<Home>> observer;
     private ImageView toTop;
+    private DragImageView dragImage;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -61,6 +63,8 @@ public class MainActivity extends BaseActivity {
         interruptBt = (Button) findViewById(R.id.interruptBt);
         addBt = (Button) findViewById(R.id.addBt);
         toTop= (ImageView) findViewById(R.id.toTop);
+        dragImage= (DragImageView) findViewById(R.id.dragImage);
+
         recyclerView = (RecyclerView) findViewById(R.id.recycleview);
         swipeRefreshLayout= (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
 

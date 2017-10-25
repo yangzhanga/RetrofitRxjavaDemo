@@ -115,7 +115,6 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
 
     @Override
     public void onBindViewHolder(MyViewHoder holder, int position) {
-        Log.e("bind",position+"");
         addAnimation(holder);
 
         holder.titleTv.setText(list.get(position).getDesc());
@@ -154,8 +153,6 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
     @Override
     public void onViewAttachedToWindow(MyViewHoder holder) {
         super.onViewAttachedToWindow(holder);
-        Log.e("ViewAttached",holder.getLayoutPosition()+"");
-
     }
 
     /**
