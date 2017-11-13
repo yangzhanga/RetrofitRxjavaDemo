@@ -35,20 +35,17 @@ public class DragImageView extends android.support.v7.widget.AppCompatImageView 
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        Log.e("DragImageView","onMeasure");
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.e("DragImageView","onLayout");
         super.onLayout(changed, left, top, right, bottom);
     }
     //调用invalidate   只会执行onDraw方法
     //调用requestLayout  则会执行onMeasure ，onLayout，onDraw方法，将绘制流程再走一遍
     @Override
     protected void onDraw(Canvas canvas) {
-        Log.e("DragImageView","onDraw");
         super.onDraw(canvas);
     }
 

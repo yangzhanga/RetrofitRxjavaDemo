@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.zhangyang.retrofitdemo.activity.ScrollingActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_svga"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="SVG"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_video"
+        android:orderInCategory="100"
+        android:title="VideoList"
         app:showAsAction="never" />
 </menu>

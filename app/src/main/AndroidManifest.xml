@@ -31,6 +31,8 @@
             android:name=".activity.ScrollingActivity"
             android:label="@string/title_activity_scrolling"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".activity.SVGAActivity" />
+        <activity android:name=".activity.VideoListActivity" />
     </application>
 
 </manifest>
