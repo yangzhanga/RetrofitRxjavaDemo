@@ -13,4 +13,22 @@
         android:orderInCategory="100"
         android:title="VideoList"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_view"
+        android:orderInCategory="100"
+        android:title="自定义View"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_scroll_view"
+        android:orderInCategory="100"
+        android:title="ScrollingActivity"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_scroll_view2"
+        android:orderInCategory="100"
+        android:title="ScrollToolbarActivity"
+        app:showAsAction="never" />
+
 </menu>

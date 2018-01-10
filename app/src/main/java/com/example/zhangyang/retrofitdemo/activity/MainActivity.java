@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +23,7 @@ import com.example.zhangyang.retrofitdemo.Http.HttpManager;
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
 import com.example.zhangyang.retrofitdemo.Http.RxSchedulers;
 import com.example.zhangyang.retrofitdemo.adapter.MyRecycleAdapter;
+import com.example.zhangyang.retrofitdemo.adapter.SimpleItemTouchHelperCallback;
 import com.example.zhangyang.retrofitdemo.api.HomeApi;
 import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.bean.Home;
@@ -75,6 +77,12 @@ public class MainActivity extends BaseActivity {
         mAdapter = new MyRecycleAdapter(MainActivity.this, listData);
         mAdapter.openLoadAnimation();//开启加载动画
         mAdapter.isFirstOnly(false);//是否只显示一次动画
+
+        //给recycleview添加交换位置和左滑删除功能
+        SimpleItemTouchHelperCallback callback=new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper itemTouchHelper=new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -92,7 +100,7 @@ public class MainActivity extends BaseActivity {
         mAdapter.setRecyclerViewItemClickListener(new MyRecycleAdapter.OnRecyclerViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                if (mAdapter.getList().get(position).getUrl() != null&&!"".equals(mAdapter.getList().get(position).getUrl())) {
+                if (mAdapter.getList()!=null&&mAdapter.getList().get(position).getUrl() != null&&!"".equals(mAdapter.getList().get(position).getUrl())) {
                     Intent intent = new Intent(MainActivity.this, SubActivity.class);
                     intent.putExtra("url", mAdapter.getList().get(position).getUrl());
                     startActivity(intent);
@@ -101,8 +109,6 @@ public class MainActivity extends BaseActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Toast.makeText(MainActivity.this, "长按删除", Toast.LENGTH_SHORT).show();
-                mAdapter.deleteItem(position);
 
             }
         });
@@ -264,6 +270,19 @@ public class MainActivity extends BaseActivity {
             case R.id.action_video:
                 Intent intentVideo=new Intent(MainActivity.this,VideoListActivity.class);
                 startActivity(intentVideo);
+                break;
+
+            case R.id.action_view:
+                Intent intentView=new Intent(MainActivity.this,MyViewActivity.class);
+                startActivity(intentView);
+                break;
+            case R.id.action_scroll_view:
+                Intent intentscrollView=new Intent(MainActivity.this,ScrollingActivity.class);
+                startActivity(intentscrollView);
+                break;
+            case R.id.action_scroll_view2:
+                Intent intentscrollView2=new Intent(MainActivity.this,ScrollToolbarActivity.class);
+                startActivity(intentscrollView2);
                 break;
             default:
                 break;

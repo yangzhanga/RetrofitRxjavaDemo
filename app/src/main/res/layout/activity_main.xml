@@ -33,7 +33,7 @@
         android:layout_alignBaseline="@+id/addBt"
         android:layout_alignBottom="@+id/addBt"
         android:layout_toEndOf="@+id/addBt"
-        android:text="可长按item删除" />
+        android:text="可左滑item删除" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"

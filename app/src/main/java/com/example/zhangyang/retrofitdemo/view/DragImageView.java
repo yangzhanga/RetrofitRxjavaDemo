@@ -7,7 +7,10 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 /**
  * Created by zhangyang on 2017/10/25.
@@ -49,6 +52,8 @@ public class DragImageView extends android.support.v7.widget.AppCompatImageView 
         super.onDraw(canvas);
     }
 
+
+    int left,top;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //getRawX 和getX的区别   getRawX获取的是相对于屏幕左上角的坐标，而getX获取的是相对于父控件的坐标
@@ -66,9 +71,9 @@ public class DragImageView extends android.support.v7.widget.AppCompatImageView 
                 int dx = startX - lastX;
                 int dy = startY - lastY;
 
-                int left = getLeft() + dx;
+                left = getLeft() + dx;
                 int right = getRight() + dx;
-                int top = getTop() + dy;
+                top = getTop() + dy;
                 int bottom = getBottom() + dy;
 
                 //判断移动是否超出屏幕
@@ -94,6 +99,10 @@ public class DragImageView extends android.support.v7.widget.AppCompatImageView 
                 break;
             case MotionEvent.ACTION_UP:
 
+//                RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) getLayoutParams();
+//                lp.setMargins(left, top,0,0);
+//                setLayoutParams(lp);
+//
                 break;
             default:
                 break;

@@ -33,6 +33,9 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".activity.SVGAActivity" />
         <activity android:name=".activity.VideoListActivity" />
+        <activity android:name=".activity.MyViewActivity" />
+        <activity android:name=".activity.ScrollToolbarActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

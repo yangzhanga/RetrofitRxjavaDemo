@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchUIUtil;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,13 +21,14 @@ import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.bean.Home;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by zhangyang on 2017/9/8.
  */
 
-public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyViewHoder> implements View.OnClickListener,View.OnLongClickListener{
+public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyViewHoder> implements ItemTouchHelperAdapter,View.OnClickListener,View.OnLongClickListener{
     private Context context;
     private List<Home> list;
     private OnRecyclerViewItemClickListener recyclerViewItemClickListener;
@@ -89,9 +91,28 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
     }
 
     /**
-     * 删除Item
+     *  移动
+     * @param fromPosition
+     * @param toPosition
      */
-    public void deleteItem(int position) {
+    @Override
+    public void onItemMove(int fromPosition, int toPosition) {
+        if(list == null || list.isEmpty()) {
+            return;
+        }
+        Collections.swap(list,fromPosition,toPosition);
+        notifyItemMoved(fromPosition, toPosition);
+        notifyItemChanged(fromPosition);
+        notifyItemChanged(toPosition);
+
+    }
+
+    /**
+     * 删除
+     * @param position
+     */
+    @Override
+    public void onItemDissmiss(int position) {
         if(list == null || list.isEmpty()) {
             return;
         }
@@ -101,7 +122,6 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
             notifyItemRangeRemoved(position,list.size()-position);
         }
     }
-
     @Override
     public MyViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
 
