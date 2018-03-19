@@ -15,4 +15,8 @@ public class TestClass extends AbsTestClass {
 
     }
 
+    @Override
+    void method() {
+
+    }
 }

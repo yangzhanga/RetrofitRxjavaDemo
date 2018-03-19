@@ -8,6 +8,9 @@ package com.example.zhangyang.retrofitdemo.test;
 
 public abstract class AbsTestClass extends FatherClass implements TestInterface{
 
+
+    abstract void method();
+
     public void absMethod1(){
 
     }

@@ -4,5 +4,10 @@
         <attr name="iconBg" format="reference"/><!-- 背景icon -->
         <attr name="iconFg" format="reference"/><!-- 前景icon -->
         <attr name="iconSize" format="dimension"/>
-    </declare-styleable> 
+    </declare-styleable>
+
+    <declare-styleable name="PayView">
+        <attr name="paywidth" format="dimension"></attr>
+        <attr name="paycolor" format="color"></attr>
+    </declare-styleable>
 </resources>
