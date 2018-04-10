@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <!--
+     app:tabMode="fixed"
+       使用屏幕等分模式，特点是显示tab的宽度是屏幕等分后的宽度
+     app:tabMode="scrollable"
+       使用滚动模式，特点是超过屏幕可以滚动显示
+    -->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="#ff00"
+        app:tabGravity="fill"
+        app:tabMode="scrollable"></android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"></android.support.v4.view.ViewPager>
+</LinearLayout>

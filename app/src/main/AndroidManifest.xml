@@ -37,6 +37,7 @@
         <activity android:name=".activity.MyViewActivity" />
         <activity android:name=".activity.ScrollToolbarActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activity.TabActivity" />
     </application>
 
 </manifest>

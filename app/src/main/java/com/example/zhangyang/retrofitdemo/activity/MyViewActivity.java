@@ -12,8 +12,12 @@ import android.widget.Button;
 
 import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.R;
+import com.example.zhangyang.retrofitdemo.annotation.TestAnnotation;
 import com.example.zhangyang.retrofitdemo.view.PayView;
 import com.example.zhangyang.retrofitdemo.view.PieChartView;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by zhangyang on 2017/11/13.
@@ -23,7 +27,6 @@ public class MyViewActivity extends BaseActivity {
     private PieChartView pieChartView;
     private PayView payView;
     private Button btSuccess, btFail;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -30,5 +30,10 @@
         android:orderInCategory="100"
         android:title="ScrollToolbarActivity"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_tab"
+        android:orderInCategory="100"
+        android:title="TabLayoutActivity"
+        app:showAsAction="never" />
 
 </menu>

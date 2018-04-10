@@ -284,6 +284,10 @@ public class MainActivity extends BaseActivity {
                 Intent intentscrollView2=new Intent(MainActivity.this,ScrollToolbarActivity.class);
                 startActivity(intentscrollView2);
                 break;
+            case R.id.action_tab:
+                Intent intentTab=new Intent(MainActivity.this,TabActivity.class);
+                startActivity(intentTab);
+                break;
             default:
                 break;
 
