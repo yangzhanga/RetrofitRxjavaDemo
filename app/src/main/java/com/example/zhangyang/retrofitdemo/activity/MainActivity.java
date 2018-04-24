@@ -288,6 +288,10 @@ public class MainActivity extends BaseActivity {
                 Intent intentTab=new Intent(MainActivity.this,TabActivity.class);
                 startActivity(intentTab);
                 break;
+            case R.id.action_test:
+                Intent intentTest=new Intent(MainActivity.this,TestActivity.class);
+                startActivity(intentTest);
+                break;
             default:
                 break;
 

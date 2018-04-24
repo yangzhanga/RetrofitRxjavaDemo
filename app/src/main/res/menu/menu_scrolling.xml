@@ -35,5 +35,10 @@
         android:orderInCategory="100"
         android:title="TabLayoutActivity"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_test"
+        android:orderInCategory="100"
+        android:title="TestActivity"
+        app:showAsAction="never" />
 
 </menu>
