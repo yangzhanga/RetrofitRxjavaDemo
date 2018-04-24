@@ -38,7 +38,7 @@
         <activity android:name=".activity.ScrollToolbarActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.TabActivity" />
-        <activity android:name=".activity.TestActivity" />
+        <activity android:name=".activity.BottomSheetActivity" />
     </application>
 
 </manifest>

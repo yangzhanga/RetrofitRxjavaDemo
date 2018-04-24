@@ -2,7 +2,6 @@ package com.example.zhangyang.retrofitdemo.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -12,11 +11,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.Http.HttpManager;
@@ -31,8 +28,6 @@ import com.example.zhangyang.retrofitdemo.observer.HttpObserver;
 import com.example.zhangyang.retrofitdemo.view.DragImageView;
 
 import java.util.List;
-
-import io.reactivex.Observable;
 
 
 /**
@@ -289,7 +284,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(intentTab);
                 break;
             case R.id.action_test:
-                Intent intentTest=new Intent(MainActivity.this,TestActivity.class);
+                Intent intentTest=new Intent(MainActivity.this,BottomSheetActivity.class);
                 startActivity(intentTest);
                 break;
             default:
