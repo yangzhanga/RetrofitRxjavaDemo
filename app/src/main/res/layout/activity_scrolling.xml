@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="300dp"
         android:fitsSystemWindows="true"
         android:background="#ff00ff"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -21,15 +21,36 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            android:background="#aaf"
+            android:background="@drawable/bg_about_qyer_img1"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <!--none：这个是默认属性，布局将正常显示，没有折叠的行为。-->
+            <!--pin：CollapsingToolbarLayout折叠后，此布局将固定在顶部。-->
+            <!--parallax：CollapsingToolbarLayout折叠时，此布局也会有视差折叠效果。还可以通过app:layout_collapseParallaxMultiplier设置视差滚动因子，值为：0~1。-->
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/AppTheme.PopupOverlay" >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:id="@+id/titlename"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="#ffffff"
+                        android:text="个人中心"
+                        android:textColor="@android:color/background_dark"
+                        android:textSize="18sp" />
+
+                </RelativeLayout>
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
