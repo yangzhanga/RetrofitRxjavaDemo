@@ -19,6 +19,7 @@ import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.Http.HttpManager;
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
 import com.example.zhangyang.retrofitdemo.Http.RxSchedulers;
+import com.example.zhangyang.retrofitdemo.RvSticky.StickyItemDecoration;
 import com.example.zhangyang.retrofitdemo.adapter.MyRecycleAdapter;
 import com.example.zhangyang.retrofitdemo.adapter.SimpleItemTouchHelperCallback;
 import com.example.zhangyang.retrofitdemo.api.HomeApi;
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity {
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
+//        recyclerView.addItemDecoration(new StickyItemDecoration());
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

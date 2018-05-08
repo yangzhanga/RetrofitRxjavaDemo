@@ -28,7 +28,7 @@ import java.util.List;
  * Created by zhangyang on 2017/9/8.
  */
 
-public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyViewHoder> implements ItemTouchHelperAdapter,View.OnClickListener,View.OnLongClickListener{
+public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyViewHoder> implements ItemTouchHelperAdapter{
     private Context context;
     private List<Home> list;
     private OnRecyclerViewItemClickListener recyclerViewItemClickListener;
@@ -126,10 +126,8 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
     public MyViewHoder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(context).inflate(R.layout.recycle_item, parent, false);
-        MyViewHoder myViewHoder=new MyViewHoder(view);
+        MyViewHoder myViewHoder=new MyViewHoder(view,recyclerViewItemClickListener);
 
-        view.setOnClickListener(this);
-        view.setOnLongClickListener(this);
         return myViewHoder;
     }
 
@@ -150,7 +148,11 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
         }else {
             holder.img.setVisibility(View.GONE);
         }
-        holder.itemView.setTag(position);
+//        if (position==3 ||position==6) {
+//            holder.itemView.setTag(true);
+//        }else {
+//            holder.itemView.setTag(false);
+//        }
     }
 
     @Override
@@ -158,12 +160,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
         return list == null ? 0 : list.size();
     }
 
-    @Override
-    public void onClick(View v) {
-        if (recyclerViewItemClickListener!=null){
-            recyclerViewItemClickListener.onItemClick(v, (Integer) v.getTag());
-        }
-    }
+
 
     /**
      * 当item进入到屏幕时调用
@@ -186,11 +183,8 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
     }
 
     @Override
-    public boolean onLongClick(View v) {
-        if (recyclerViewItemClickListener!=null){
-            recyclerViewItemClickListener.onItemLongClick(v, (Integer) v.getTag());
-        }
-        return false;
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
     }
 
     /**
@@ -234,16 +228,37 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
         anim.setInterpolator(mInterpolator);
     }
 
-    static class MyViewHoder  extends RecyclerView.ViewHolder{
-    private TextView titleTv,nameTv,timeTv;
+    static class MyViewHoder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
+        private TextView titleTv, nameTv, timeTv;
         private ImageView img;
-        public MyViewHoder(View itemView) {
+        private OnRecyclerViewItemClickListener mRecyclerViewItemClickListener;
+
+        public MyViewHoder(View itemView,OnRecyclerViewItemClickListener recyclerViewItemClickListener) {
             super(itemView);
 
-            titleTv= (TextView) itemView.findViewById(R.id.titleTv);
-            nameTv= (TextView) itemView.findViewById(R.id.nameTv);
-            timeTv=(TextView) itemView.findViewById(R.id.timeTv);
-            img= (ImageView) itemView.findViewById(R.id.img);
+            mRecyclerViewItemClickListener=recyclerViewItemClickListener;
+            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
+            titleTv = (TextView) itemView.findViewById(R.id.titleTv);
+            nameTv = (TextView) itemView.findViewById(R.id.nameTv);
+            timeTv = (TextView) itemView.findViewById(R.id.timeTv);
+            img = (ImageView) itemView.findViewById(R.id.img);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mRecyclerViewItemClickListener!=null){
+                mRecyclerViewItemClickListener.onItemClick(v,getLayoutPosition());
+            }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            if(mRecyclerViewItemClickListener != null){
+                mRecyclerViewItemClickListener.onItemLongClick(v,getLayoutPosition());
+            }
+            return true;
         }
     }
 
