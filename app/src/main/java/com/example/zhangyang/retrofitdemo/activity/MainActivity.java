@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity {
     HttpObserver<List<Home>> observer;
     private ImageView toTop;
     private DragImageView dragImage;
+    private String test;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
