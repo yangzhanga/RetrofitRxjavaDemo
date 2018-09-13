@@ -19,7 +19,6 @@ import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.Http.HttpManager;
 import com.example.zhangyang.retrofitdemo.Http.HttpResponse;
 import com.example.zhangyang.retrofitdemo.Http.RxSchedulers;
-import com.example.zhangyang.retrofitdemo.RvSticky.StickyItemDecoration;
 import com.example.zhangyang.retrofitdemo.adapter.MyRecycleAdapter;
 import com.example.zhangyang.retrofitdemo.adapter.SimpleItemTouchHelperCallback;
 import com.example.zhangyang.retrofitdemo.api.HomeApi;
@@ -287,6 +286,10 @@ public class MainActivity extends BaseActivity {
             case R.id.action_test:
                 Intent intentTest=new Intent(MainActivity.this,BottomSheetActivity.class);
                 startActivity(intentTest);
+                break;
+            case R.id.action_rv:
+                Intent intentRv=new Intent(MainActivity.this,RecyclerViewActivity.class);
+                startActivity(intentRv);
                 break;
             default:
                 break;

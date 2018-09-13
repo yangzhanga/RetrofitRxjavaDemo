@@ -12,7 +12,7 @@ import com.example.zhangyang.retrofitdemo.BaseActivity;
 import com.example.zhangyang.retrofitdemo.R;
 import com.example.zhangyang.retrofitdemo.fragment.FragmentForTab;
 import com.example.zhangyang.retrofitdemo.fragment.FragmentOne;
-import com.example.zhangyang.retrofitdemo.utils.ZoomOutPageTransformer;
+import com.example.zhangyang.retrofitdemo.ViewPageTransformer.ZoomOutPageTransformer;
 
 import java.util.ArrayList;
 import java.util.List;

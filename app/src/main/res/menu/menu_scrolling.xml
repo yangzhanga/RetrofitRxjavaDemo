@@ -40,5 +40,10 @@
         android:orderInCategory="100"
         android:title="BottomSheetActivity"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_rv"
+        android:orderInCategory="100"
+        android:title="列表显示动画"
+        app:showAsAction="never" />
 
 </menu>

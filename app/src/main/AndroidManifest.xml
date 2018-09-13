@@ -39,6 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".activity.TabActivity" />
         <activity android:name=".activity.BottomSheetActivity" />
+        <activity android:name=".activity.RecyclerViewActivity" />
     </application>
 
 </manifest>

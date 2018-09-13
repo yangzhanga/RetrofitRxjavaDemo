@@ -138,7 +138,7 @@ public class MyRecycleAdapter extends RecyclerView.Adapter<MyRecycleAdapter.MyVi
         holder.titleTv.setText(list.get(position).getDesc());
         holder.nameTv.setText(list.get(position).getWho());
         holder.timeTv.setText(list.get(position).getPublishedAt().replace("T"," ").replace("Z"," "));
-        if (list.get(position).getImages()!=null&&list.get(position).getImages().get(0)!=null){
+        if (list.get(position).getImages()!=null&&list.get(position).getImages().size()>0){
             holder.img.setVisibility(View.VISIBLE);
             Glide.with(context)
                     .load(list.get(position).getImages().get(0))
